@@ -51,4 +51,6 @@ public class CustomerDTO {
     
     @JsonProperty(access = Access.READ_ONLY)
     private Role role;
+    
+    private String disease;
 }
