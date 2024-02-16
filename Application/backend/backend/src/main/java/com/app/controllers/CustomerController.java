@@ -70,53 +70,7 @@ public class CustomerController {
         }
     }
 
-    // Endpoint to add a new customer
-    // URL: http://localhost:8080/customer
-    @PostMapping("/register")
-    public ResponseEntity<CustomerDTO> addCustomer(@RequestBody CustomerDTO custDto) {
-        //try {
-            CustomerDTO createdCustomer = custService.addCustomer(custDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
-        //}
-//        catch (CustomerServiceException e) {
-//            throw new CustomerControllerException("Error while adding customer: " + e.getMessage());
-//        }
-    }
-
-    // Endpoint for customer login
-    // URL: http://localhost:8080/customer/login
-//    @PostMapping("/signin")
-//    public ResponseEntity<CustomerDTO> loginCustomer(@RequestParam String email, @RequestParam String password) {
-//        CustomerDTO customer = custService.loginCustomer(email, password);
-//        if (customer != null) {
-//            return ResponseEntity.ok(customer);
-//        } else {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
-//    }
     
-    @PostMapping("/signin")
-	public ResponseEntity<?> signinUser(@RequestBody @Valid SigninRequest reqDTO) {
-    	try {
-            // Perform user authentication
-            Authentication verifiedAuth = mgr.authenticate(
-                    new UsernamePasswordAuthenticationToken(reqDTO.getEmail(), reqDTO.getPassword()));
-
-            // If authentication is successful, return a JWT token
-            if (verifiedAuth.isAuthenticated()) {
-            	CustomerDTO custDto = custService.getCustomerByEmailAddress(reqDTO.getEmail());
-                return ResponseEntity.ok(new SigninResponse(utils.generateJwtToken(verifiedAuth), custDto));
-            } else {
-                // If authentication fails, return a 401 Unauthorized status code
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid user credentials");
-            }
-        } catch (AuthenticationException e) {
-        	
-        	System.out.println("inside signin exception");
-            // If an AuthenticationException occurs (e.g., invalid credentials), return a 401 Unauthorized status code
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid user credentials");
-        }
-	}
 
     // Endpoint to edit customer details
     // URL: http://localhost:8080/customer/{custId}
