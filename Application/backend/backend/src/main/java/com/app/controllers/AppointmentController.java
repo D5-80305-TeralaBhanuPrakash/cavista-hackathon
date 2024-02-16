@@ -1,8 +1,6 @@
 package com.app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,21 +9,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.dto.CompletedTaskDTO;
-import com.app.service.CompletedTasksService;
+import com.app.dto.AppointmentDTO;
+import com.app.service.AppointmentService;
 
 @RestController
-@RequestMapping("/completed-tasks")
+@RequestMapping("/appointments")
 @CrossOrigin(origins="http://localhost:3000")
 @Validated
-public class CompletedTasksController {
+public class AppointmentController {
 	@Autowired
-	private CompletedTasksService comTaskService;
+	private AppointmentService appointService;
 	
-	@PostMapping("/{userId}/{taskId}")
+	@PostMapping("/{userId}/{hospId}")
 	@PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-	public ResponseEntity<CompletedTaskDTO> addCompletedTask(@PathVariable Integer userId,@PathVariable Integer taskId){
-		CompletedTaskDTO compltaskDto = comTaskService.addCompletedTask(userId, taskId);
-	    return ResponseEntity.status(HttpStatus.CREATED).body(compltaskDto);
+	public AppointmentDTO addAppointment(@PathVariable Integer userId,@PathVariable Integer hospId) {
+		return appointService.addAppointment(userId,hospId);
 	}
 }

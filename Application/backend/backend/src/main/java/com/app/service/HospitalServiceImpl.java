@@ -1,5 +1,8 @@
 package com.app.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
@@ -21,7 +24,18 @@ public class HospitalServiceImpl implements HospitalService{
 
 	@Override
 	public HospitalDTO addHospital(HospitalDTO hospDto) {
-		Hospital hosp = hospDao.save(mapper.map(hospDto,Hospital.class));
+		
+		Hospital hosp = mapper.map(hospDto,Hospital.class);
+		System.out.println(hosp);
+		hospDao.save(hosp);
 		return mapper.map(hosp, HospitalDTO.class);
+	}
+
+	@Override
+	public List<HospitalDTO> getAllHospitals() {
+		List<Hospital> hospList = hospDao.findAll();
+		return hospList.stream()
+				.map(hosp->mapper.map(hosp, HospitalDTO.class))
+				.collect(Collectors.toList());
 	}
 }

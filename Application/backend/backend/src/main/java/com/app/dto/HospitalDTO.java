@@ -7,29 +7,23 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Getter
 @Setter
 @ToString
 public class HospitalDTO {
 	@JsonProperty(access = Access.READ_ONLY)
-private Integer hospitalId;
-	
-	
-	private String name;
-	
-	
-	private String address;
-	
-	
-	private Double fees;
-	
-	
-    private String email;
-    
-    @JsonProperty(access = Access.READ_ONLY)
-    private String password;
+	private Integer hospitalId;
 
-    
-    private String phoneNumber;
+	private String name;
+
+	private String address;
+
+	private Double fees;
+
+	private String email;
+
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private String password;
+
+	private String phoneNumber;
 }

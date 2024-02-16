@@ -10,22 +10,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-
+@ToString
 @Entity
-@Table(name = "CompletedTasks")
+@Table(name = "completedTasks")
 public class CompletedTasks {
 
     @Id
@@ -38,9 +37,15 @@ public class CompletedTasks {
     @JoinColumn(name = "customerId",nullable = false)
     private Customer customer;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="taskId",nullable = false)
     private Tasks task;
     
     private LocalDate date;
+    
+    public CompletedTasks(Customer customer,Tasks task,LocalDate date){
+    	this.customer = customer;
+    	this.task = task;
+    	this.date = date;
+    }
 }

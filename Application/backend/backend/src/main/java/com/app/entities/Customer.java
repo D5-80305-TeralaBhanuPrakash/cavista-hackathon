@@ -69,6 +69,9 @@ public class Customer {
     @Column(name="disease",nullable=false)
     private String disease;
     
+    @Column(name="rewards",nullable=false)
+    private int rewards;
+    
     
     
     

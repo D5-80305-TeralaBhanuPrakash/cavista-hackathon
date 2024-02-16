@@ -52,9 +52,13 @@ public class CustomerServiceImpl implements CustomerService {
 	    	custDto.setRole(Role.ROLE_USER);
 	        custDto.setRegistrationDate(LocalDate.now());
 	        custDto.setStatus(true);
-	        Customer cust = custDao.save(mapper.map(custDto, Customer.class));
+	        Customer cust = mapper.map(custDto, Customer.class);
 	        cust.setPassword(encoder.encode(custDto.getPassword()));
-	        return mapper.map(cust, CustomerDTO.class);
+	        cust.setRewards(0);
+	        System.out.println(cust);
+	        Customer cust1 = custDao.save(mapper.map(custDto, Customer.class));
+	        
+	        return mapper.map(cust1, CustomerDTO.class);
 	    } catch (Exception e) {
 	        throw new CustomerServiceException("Error while adding customer: " + e.getMessage());
 	    }
@@ -118,6 +122,13 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public CustomerDTO getCustomerByEmailAddress(String email) {
 		Customer cust = custDao.findByEmail(email).orElseThrow(()-> new CustomerNotFoundException("customer not found"));
+		return mapper.map(cust, CustomerDTO.class);
+	}
+	
+	public CustomerDTO updateCustomerRewards(Integer custId) {
+		Customer cust = custDao.findById(custId).orElseThrow(()-> new CustomerNotFoundException("customer not found"));
+		cust.setRewards(cust.getRewards()+1);
+		custDao.save(cust);
 		return mapper.map(cust, CustomerDTO.class);
 	}
 

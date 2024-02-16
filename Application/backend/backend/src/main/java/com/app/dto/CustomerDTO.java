@@ -53,4 +53,6 @@ public class CustomerDTO {
     private Role role;
     
     private String disease;
+    @JsonProperty(access = Access.READ_ONLY)
+    private Integer reward;
 }

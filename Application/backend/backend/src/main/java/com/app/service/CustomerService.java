@@ -2,6 +2,7 @@ package com.app.service;
 
 import java.util.List;
 
+import com.app.dto.CompletedTaskDTO;
 import com.app.dto.CustomerDTO;
 
 public interface CustomerService {
@@ -23,5 +24,7 @@ public interface CustomerService {
 	List<CustomerDTO> getCustomersSortedByRegistrationDateDesc();
 
 	CustomerDTO getCustomerByEmailAddress(String email);
+
+	CustomerDTO updateCustomerRewards(Integer userId);
 
 }
